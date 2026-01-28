@@ -20,6 +20,7 @@ module.exports = (sequelize, Sequelize) => {
            defaultValue: "User" 
         }
     },{
+        tableName: 'Users',
         timestamps: false
     });
     User.associate = function(models) {

@@ -8,6 +8,7 @@ module.exports = (sequelize, Sequelize) => {
             }
         },
     },{
+        tableName: 'Rates',
         timestamps: false
     });
 	return Rate

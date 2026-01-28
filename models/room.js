@@ -3,6 +3,7 @@ module.exports = (sequelize, Sequelize) => {
         PricePerDay: Sequelize.DataTypes.DECIMAL(10,2),
         Capacity: Sequelize.DataTypes.INTEGER,
     },{
+        tableName: 'Rooms',
         timestamps: false
     });
     Room.associate = function(models) {

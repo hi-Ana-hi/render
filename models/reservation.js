@@ -3,6 +3,7 @@ module.exports = (sequelize, Sequelize) => {
         StartDate: Sequelize.DataTypes.DATE,
         EndDate: Sequelize.DataTypes.DATE,
     },{
+        tableName: 'Reservations',
         timestamps: false,
         hasTrigger: true
     });
