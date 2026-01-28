@@ -1,13 +1,20 @@
 module.exports = (sequelize, Sequelize) => {
-    const Hotel = sequelize.define('Hotel', {
-        Name: Sequelize.DataTypes.STRING,
-        Location: Sequelize.DataTypes.STRING
-    },{
-        timestamps: false
-    });
+    const Hotel = sequelize.define(
+        'Hotel',
+        {
+            Name: Sequelize.DataTypes.STRING,
+            Location: Sequelize.DataTypes.STRING
+        },
+        {
+            tableName: 'Hotels',   // 👈 THIS IS THE FIX
+            timestamps: false
+        }
+    );
+
     Hotel.associate = function(models) {
         Hotel.hasMany(models.Room);
-        Hotel.belongsToMany(models.User, {through: models.Rate})
+        Hotel.belongsToMany(models.User, { through: models.Rate });
     };
-	return Hotel
-}
+
+    return Hotel;
+};
