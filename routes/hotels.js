@@ -9,9 +9,14 @@ var { checkIfAuthorized, isAdmin } = require("./authMiddlewares")
 
 /* GET hotels listing. */
 router.get('/', async function(req, res, next) {
-  const hotels = await hotelService.get();
-  const username = req.user?.username ?? 0;
-  res.render('hotels', { hotels: hotels, user: req.user, username });
+  try {
+    const hotels = await hotelService.get();
+    const username = req.user?.username ?? 0;
+    res.render('hotels', { hotels, user: req.user, username });
+  } catch (error) {
+    console.error("Error loading hotels:", error);
+    next(error); // IMPORTANT
+  }
 });
 
 router.get('/:hotelId', async function(req, res, next) {
