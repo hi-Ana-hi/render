@@ -3,29 +3,17 @@ const { QueryTypes } = require('sequelize');
 class HotelService {
     constructor(db) {
         this.client = db.sequelize;
+        this.Hotel = db.Hotel;
     }
 
     //Create a hotel using raw SQL
     async create(name, location) {
-        sequelize.query('INSERT INTO Hotels (Name, Location) VALUES (:Name, :Location)', {
-            replacements:
-            {
-                Name: name,
-                Location: location
-            }
-        }).then(result => {
-            return result
-        }).catch(err => {
-            return (err)
-        })
+        return this.Hotel.create({ Name: name, Location: location });
     }
 
     //Get all hotels using raw SQL
     async get() {
-        const hotels = await sequelize.query('SELECT * FROM Hotels', {
-            type: QueryTypes.SELECT,
-        });
-        return hotels;
+        return this.Hotel.findAll();
     }
 
     //Get hotel details using raw SQL	
@@ -40,7 +28,7 @@ class HotelService {
         });
 
         //Retrive user rating count
-        const userRateCount = await sequelize.query('SELECT COUNT(*) as Rated FROM rates WHERE HotelId = :hotelId AND UserId = :userId;', {
+        const userRateCount = await sequelize.query('SELECT COUNT(*) as Rated FROM Rates WHERE HotelId = :hotelId AND UserId = :userId;', {
             replacements:
             {
                 hotelId: hotelId,
@@ -61,16 +49,7 @@ class HotelService {
 
     //Delete a hotel using raw SQL
     async deleteHotel(hotelId) {
-        await sequelize.query('DELETE FROM Hotels WHERE id = :hotelId', {
-            replacements:
-            {
-                hotelId: hotelId
-            }
-        }).then(result => {
-            return result
-        }).catch(err => {
-            return (err)
-        })
+        return this.Hotel.destroy({ where: { id: hotelId } });
     }
 
     //Rate a hotel using raw SQL
